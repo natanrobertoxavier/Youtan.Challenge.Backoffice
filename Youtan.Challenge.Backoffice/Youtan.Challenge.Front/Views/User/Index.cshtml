@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+<!-- Tabbed form -->
+<div style="justify-content: center; align-items: center; display: flex; position:fixed; width:100%; height:100vh; overflow:hidden; top:0px;">
+    <div class="tabbable panel login-form width-400">
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active"><a href="#basic-tab1" data-toggle="tab"><h6>Acessar</h6></a></li>
+            <li><a href="#basic-tab2" data-toggle="tab"><h6>Cadastrar-se</h6></a></li>
+        </ul>
+
+        <div class="tab-content panel-body">
+            <div class="tab-pane fade in active" id="basic-tab1">
+                <form action="index.html">
+                    <div class="text-center">
+                        <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                        <h5 class="content-group">Faça login na sua conta <small class="display-block">Suas credenciais</small></h5>
+                    </div>
+
+                    <div class="form-group has-feedback has-feedback-left">
+                        <input id="txtEmailLogin" type="text" class="form-control" placeholder="E-mail" required="required">
+                        <div class="form-control-feedback">
+                            <i class="icon-user text-muted"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group has-feedback has-feedback-left">
+                        <input id="txtPasswordLogin" type="password" class="form-control" placeholder="Senha" required="required">
+                        <div class="form-control-feedback">
+                            <i class="icon-lock2 text-muted"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" class="btn bg-blue btn-block" onclick="Login()">Login <i class="icon-arrow-right14 position-right"></i></button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane fade" id="basic-tab2">
+                <form action="index.html">
+                    <div class="text-center">
+                        <div class="icon-object border-success text-success"><i class="icon-plus3"></i></div>
+                        <h5 class="content-group">Criar nova conta<small class="display-block">Todos os campos são necessários</small></h5>
+                    </div>
+
+                    <div class="form-group has-feedback has-feedback-left">
+                        <input id="txtNameRegisterUser" type="text" class="form-control" placeholder="Nome">
+                        <div class="form-control-feedback">
+                            <i class="icon-user-check text-muted"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group has-feedback has-feedback-left">
+                        <input id="txtPasswordRegisterUser" type="password" class="form-control" placeholder="Senha">
+                        <div class="form-control-feedback">
+                            <i class="icon-user-lock text-muted"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group has-feedback has-feedback-left">
+                        <input id="txtEmailRegisterLogin" type="text" class="form-control" placeholder="user@youtan.com">
+                        <div class="form-control-feedback">
+                            <i class="icon-mention text-muted"></i>
+                        </div>
+                    </div>
+                    <button id="btnRegistrarUsuarioLogin" type="button" class="btn bg-blue btn-block" onclick="ValidateRegisterUser()">Cadastrar <i class="icon-circle-right2 position-right"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /tabbed form -->
