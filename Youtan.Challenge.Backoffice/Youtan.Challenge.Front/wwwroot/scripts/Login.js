@@ -142,7 +142,7 @@ function SucessRegisterUser(json) {
                 if (result) {
                     $.blockUI({ timeout: 10 });
                     sessionStorage.clear();
-                    sessionStorage.setItem("USUARIO", JSON.stringify(retorno))
+                    sessionStorage.setItem("USER", JSON.stringify(retorno))
                     window.location.assign("../User/Index");
                 }
                 else {
@@ -178,7 +178,7 @@ function SuccessLogin(json) {
         sessionStorage.clear();
         sessionStorage.setItem("USER", JSON.stringify(retorno))
 
-        window.location.assign("../Home/Index");
+        window.location.assign("../Home/Index");;
     }
     else if (retorno.success == false) {
         swal({

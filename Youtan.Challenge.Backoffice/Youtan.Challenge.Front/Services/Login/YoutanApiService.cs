@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net;
 using System.Text;
 using Youtan.Challenge.Front.Models.Request;
 using Youtan.Challenge.Front.Models.Response;
@@ -75,6 +76,98 @@ public class YoutanApiService(
             var content = await response.Content.ReadAsStringAsync();
 
             var responseApi = JsonConvert.DeserializeObject<Result<MessageResult>>(content);
+
+            if (responseApi.IsSuccess())
+            {
+                _logger.Information($"{nameof(LoginUserAsync)} - Encerrando chamada para cadastro de usuário.");
+
+                return responseApi;
+            }
+
+            var apiErrors = string.Join(" - ", responseApi?.Errors);
+
+            var failMessage = $"{nameof(LoginUserAsync)} - Ocorreu um erro ao chamar a API. StatusCode: {response.StatusCode} - {apiErrors}";
+
+            _logger.Error(failMessage);
+
+            return output.Failure(responseApi?.Errors.ToList());
+        }
+        catch (Exception ex)
+        {
+            var errorMessage = $"{nameof(LoginUserAsync)} - Ocorreu um erro ao chamar a API. Erro: {ex.Message}";
+
+            _logger.Error(errorMessage);
+
+            return output.Failure(new List<string>() { errorMessage });
+        }
+    }
+
+    public async Task<Result<MessageResult>> RegisterAuctionAsync(RequestRegisterAuction request)
+    {
+        _logger.Information($"{nameof(LoginUserAsync)} - Iniciando a chamada para cadastro de usuário.");
+
+        var output = new Result<MessageResult>();
+
+        try
+        {
+            var client = _httpClientFactory.CreateClient("YoutanApi");
+
+            var uri = string.Format("/api/v1/auction");
+
+            var contentRequest = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", request.Token);
+
+            var response = await client.PostAsync(uri, contentRequest);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var responseApi = JsonConvert.DeserializeObject<Result<MessageResult>>(content);
+
+            if (responseApi.IsSuccess())
+            {
+                _logger.Information($"{nameof(LoginUserAsync)} - Encerrando chamada para cadastro de usuário.");
+
+                return responseApi;
+            }
+
+            var apiErrors = string.Join(" - ", responseApi?.Errors);
+
+            var failMessage = $"{nameof(LoginUserAsync)} - Ocorreu um erro ao chamar a API. StatusCode: {response.StatusCode} - {apiErrors}";
+
+            _logger.Error(failMessage);
+
+            return output.Failure(responseApi?.Errors.ToList());
+        }
+        catch (Exception ex)
+        {
+            var errorMessage = $"{nameof(LoginUserAsync)} - Ocorreu um erro ao chamar a API. Erro: {ex.Message}";
+
+            _logger.Error(errorMessage);
+
+            return output.Failure(new List<string>() { errorMessage });
+        }
+    }
+
+    public async Task<Result<IEnumerable<ResponseAuction>>> RecoverAllAuctionsAsync(string token)
+    {
+        _logger.Information($"{nameof(LoginUserAsync)} - Iniciando a chamada para cadastro de usuário.");
+
+        var output = new Result<IEnumerable<ResponseAuction>>();
+
+        try
+        {
+            var client = _httpClientFactory.CreateClient("YoutanApi");
+
+            var uri = string.Format("/api/v1/auction");
+
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var response = await client.GetAsync(uri);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var responseApi = JsonConvert.DeserializeObject<Result<IEnumerable<ResponseAuction>>>(content);
 
             if (responseApi.IsSuccess())
             {

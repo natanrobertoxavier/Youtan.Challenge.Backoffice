@@ -7,4 +7,6 @@ public interface IYoutanServiceApi
 {
     Task<Result<ResponseLogin>> LoginUserAsync(RequestLogin request);
     Task<Result<MessageResult>> RegisterUserAsync(RequestRegisterUser request);
+    Task<Result<MessageResult>> RegisterAuctionAsync(RequestRegisterAuction request);
+    Task<Result<IEnumerable<ResponseAuction>>> RecoverAllAuctionsAsync(string token);
 }

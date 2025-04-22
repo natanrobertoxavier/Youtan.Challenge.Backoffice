@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Listagem de Leilões";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+
+        <form id="frmCadastroProduto" class="form-validate-jquery" action="#" novalidate="novalidate">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <h5 class="panel-title">Listagem de Leilões</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input id="txtListSearch" type="text" class="form-control" placeholder="Pesquisar" oninput="FilterAuctions()">
+                                    </div>
+                                </div>                                
+                                <div class="col-md-4">
+                                    <div class="form-group">
+
+                                        <select id="txtTypeSearchAuction" class="form-control">
+                                            <option value="0">Data</option>
+                                            <option value="1">Nome</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div id="divAuctionsList" class="panel panel-flat">
+                                    <div class="panel-heading">
+                                        <h5 class="panel-title">Leilões</h5>
+                                    </div>
+                                    <div class="table-responsive pre-scrollable" style="overflow-y: auto;">
+                                        <table class="table" id="tbAuctionsList">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 90px;">Data</th>
+                                                    <th style="width: 20px;">Nome</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

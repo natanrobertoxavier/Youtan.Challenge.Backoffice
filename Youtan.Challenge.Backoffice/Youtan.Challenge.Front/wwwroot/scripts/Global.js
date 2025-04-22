@@ -46,20 +46,25 @@ function ErrorAsyncRequest(json) {
     });
 }
 
-function VerificaSessao() {
-    let varSessao = sessionStorage.getItem("USUARIO");
+function Logout() {
+    sessionStorage.clear();
+    window.location.assign("../");
+}
+
+function CheckSession() {
+    let varSessao = sessionStorage.getItem("USER");
     const sessao = JSON.parse(varSessao);
 
-    if (sessao == null || sessao == undefined || sessao.token == "") {
+    if (sessao == null || sessao == undefined || sessao.data.token == "" || sessao.data.token == undefined) {
         window.location.assign("../");
     } else {
-        document.getElementById("txtNomeTopoLayout").textContent = sessao.nome
-        document.getElementById("txtNomeMenuLayout").textContent = sessao.nome
+        document.getElementById("txtNameTopLayout").textContent = sessao.data.name
+        document.getElementById("txtNomeMenuLayout").textContent = sessao.data.name
     }
 }
 
-function RetornaSessao() {
-    let varSessao = sessionStorage.getItem("USUARIO");
+function RetriverUserFromSession() {
+    let varSessao = sessionStorage.getItem("USER");
     const sessao = JSON.parse(varSessao);
 
     return sessao;

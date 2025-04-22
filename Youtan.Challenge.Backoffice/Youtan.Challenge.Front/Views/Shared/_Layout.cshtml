@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Backoffice - Youtan Challenge</title>
 
-    <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 
     <link href="~/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
@@ -14,14 +13,10 @@
     <link href="~/assets/css/core.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/components.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/colors.css" rel="stylesheet" type="text/css">
-    <!-- /global stylesheets -->
-    <!-- Core JS files -->
     <script type="text/javascript" src="~/assets/js/plugins/loaders/pace.min.js"></script>
     <script type="text/javascript" src="~/assets/js/core/libraries/jquery.min.js"></script>
     <script type="text/javascript" src="~/assets/js/core/libraries/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/assets/js/plugins/loaders/blockui.min.js"></script>
-    <!-- /core JS files -->
-    <!-- Theme JS files -->
     <script type="text/javascript" src="~/assets/js/plugins/visualization/d3/d3.min.js"></script>
     <script type="text/javascript" src="~/assets/js/plugins/visualization/d3/d3_tooltip.js"></script>
     <script type="text/javascript" src="~/assets/js/plugins/forms/styling/switchery.min.js"></script>
@@ -44,24 +39,14 @@
     <script type="text/javascript" src="~/assets/js/plugins/tables/datatables/datatables.min.js"></script>
     <script type="text/javascript" src="~/assets/js/plugins/forms/selects/select2.min.js"></script>
     <script type="text/javascript" src="~/scripts/uuidv4.min.js"></script>
-
-
-
     <script type="text/javascript" src="~/assets/js/plugins/notifications/bootbox.min.js"></script>
     <script type="text/javascript" src="~/assets/js/plugins/notifications/sweet_alert.min.js"></script>
     <script type="text/javascript" src="~/assets/js/pages/components_modals.js"></script>
-
-
     <script type="text/javascript" src="~/assets/js/plugins/notifications/pnotify.min.js"></script>
     <script type="text/javascript" src="~/assets/js/pages/components_notifications_pnotify.js"></script>
-
-    <!-- /theme JS files -->
-
 </head>
 
 <body>
-
-    <!-- Main navbar -->
     <div class="navbar navbar-inverse">
         <div class="navbar-header">
             <a class="navbar-brand"><img src="~/assets/images/logo_light.png" alt=""></a>
@@ -80,56 +65,46 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown dropdown-user">
                     <a class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="~/assets/images/placeholder.jpg" alt="">
-                        <span id="txtNomeTopoLayout"></span>
+                        <span id="txtNameTopLayout"></span>
                         <i class="caret"></i>
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-right">
-                        @*<li><a href="#"><i class="icon-user-plus"></i> Meu Perfil</a></li>*@
-                        <li><a onclick="SairDoSistema()"><i class="icon-switch2"></i> Sair</a></li>
+                        <li><a onclick="Logout()"><i class="icon-switch2"></i> Sair</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
-    <!-- /main navbar -->
-    <!-- Page container -->
     <div class="page-container">
-
-        <!-- Page content -->
         <div class="page-content">
-
-            <!-- Main sidebar -->
             <div class="sidebar sidebar-main">
                 <div class="sidebar-content">
-
-                    <!-- User menu -->
                     <div class="sidebar-user">
                         <div class="category-content">
                             <div class="media">
                                 <a href="#" class="media-left"><img src="~/assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></a>
                                 <div class="media-body">
                                     <span id="txtNomeMenuLayout" class="media-heading text-semibold"></span>
-                                    @*<div class="text-size-mini text-muted">
-                                        <i class="icon-pin text-size-small"></i> Tupã, SP
-                                    </div>*@
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /user menu -->
-                    <!-- Main navigation -->
                     <div class="sidebar-category sidebar-category-visible">
                         <div class="category-content no-padding">
                             <ul class="navigation navigation-main navigation-accordion">
-
-                                <!-- Main -->
                                 <li class="navigation-header"><span>Menu</span> <i class="icon-menu" title="Main pages"></i></li>
                                 <li class=""><a id="IrParaInicio" onclick="IrParaInicio()"><i class="icon-home4"></i> <span>Início</span></a></li>
                                 <li>
                                     <a href="#"><i class="icon-stack2"></i> <span>Cadastros</span></a>
                                     <ul>
+                                        <li>
+                                            <a>Leilões</a>
+                                            <ul>
+                                                <li><a onclick="CallAuctionRegistration()">Cadastrar</a></li>
+                                                <li><a onclick="CallAuctionList()">Listar</a></li>
+                                            </ul>
+                                        </li>
                                         <li>
                                             <a>Produtos</a>
                                             <ul>
@@ -160,19 +135,12 @@
                                         <li><a href="#">Produtos</a></li>
                                     </ul>
                                 </li>
-                                <!-- /main -->
                             </ul>
                         </div>
                     </div>
-                    <!-- /main navigation -->
-
                 </div>
             </div>
-            <!-- /main sidebar -->
-            <!-- Main content -->
             <div class="content-wrapper">
-
-                <!-- Page header -->
                 <div class="page-header page-header-default">
                     <div class="page-header-content">
                         <div class="page-title">
@@ -181,30 +149,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- /page header -->
-                <!-- Content area -->
                 <div class="content">
                     @RenderBody()
                 </div>
-                <!-- /content area -->
             </div>
-            <!-- /main content -->
         </div>
-        <!-- /page content -->
     </div>
-    <!-- /page container -->
     <script src="~/lib/jquery-mask/jquery.mask.min.js"></script>
     <script src="~/scripts/Global.js"></script>
-
-
-    <script src="~/scripts/Principal.js"></script>
-    <script src="~/scripts/CadastroCliente.js"></script>
-    <script src="~/scripts/CadastroProduto.js"></script>
-    <script src="~/scripts/CadastroUsuario.js"></script>
-    <script src="~/scripts/RegistrarPedido.js"></script>
-    <script src="~/scripts/listagemproduto.js"></script>
-    <script src="~/scripts/EditarProduto.js"></script>
-    <script src="~/scripts/ListagemCliente.js"></script>
-    <script src="~/scripts/EditarCliente.js"></script>
+    <script src="~/scripts/Main.js"></script>
+    <script src="~/scripts/AuctionRegistration.js"></script>
+    <script src="~/scripts/AuctionList.js"></script>
 </body>
 </html>
