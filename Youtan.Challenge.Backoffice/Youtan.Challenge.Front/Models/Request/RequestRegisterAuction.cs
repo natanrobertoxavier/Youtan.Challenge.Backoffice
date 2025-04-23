@@ -5,9 +5,8 @@ public class RequestRegisterAuction(
     DateTime auctionDate,
     string auctionName,
     string auctionDescription,
-    string auctionAddress)
+    string auctionAddress) : RequestToken(token)
 {
-    public string Token { get; set; } = token;
     public DateTime AuctionDate { get; set; } = auctionDate;
     public string AuctionName { get; set; } = auctionName;
     public string AuctionDescription { get; set; } = auctionDescription;

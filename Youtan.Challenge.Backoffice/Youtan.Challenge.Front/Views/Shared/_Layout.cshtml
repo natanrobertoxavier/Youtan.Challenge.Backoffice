@@ -49,7 +49,7 @@
 <body>
     <div class="navbar navbar-inverse">
         <div class="navbar-header">
-            <a class="navbar-brand"><img src="~/assets/images/logo_light.png" alt=""></a>
+            <a class="navbar-brand"><img src="~/assets/images/youtan.png" alt=""></a>
 
             <ul class="nav navbar-nav visible-xs-block">
                 <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
@@ -83,7 +83,6 @@
                     <div class="sidebar-user">
                         <div class="category-content">
                             <div class="media">
-                                <a href="#" class="media-left"><img src="~/assets/images/placeholder.jpg" class="img-circle img-sm" alt=""></a>
                                 <div class="media-body">
                                     <span id="txtNomeMenuLayout" class="media-heading text-semibold"></span>
                                 </div>
@@ -94,7 +93,7 @@
                         <div class="category-content no-padding">
                             <ul class="navigation navigation-main navigation-accordion">
                                 <li class="navigation-header"><span>Menu</span> <i class="icon-menu" title="Main pages"></i></li>
-                                <li class=""><a id="IrParaInicio" onclick="IrParaInicio()"><i class="icon-home4"></i> <span>Início</span></a></li>
+                                <li class=""><a id="Home" onclick="GoToHome()"><i class="icon-home4"></i> <span>Início</span></a></li>
                                 <li>
                                     <a href="#"><i class="icon-stack2"></i> <span>Cadastros</span></a>
                                     <ul>
@@ -105,34 +104,6 @@
                                                 <li><a onclick="CallAuctionList()">Listar</a></li>
                                             </ul>
                                         </li>
-                                        <li>
-                                            <a>Produtos</a>
-                                            <ul>
-                                                <li><a onclick="ChamaCadastroProdutos()">Cadastrar</a></li>
-                                                <li><a onclick="ChamaListarProdutos()">Listar</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a>Clientes</a>
-                                            <ul>
-                                                <li><a onclick="ChamaCadastroClientes()">Cadastrar</a></li>
-                                                <li><a onclick="ChamaListarClientes()">Listar</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="icon-copy"></i> <span>Pedidos</span></a>
-                                    <ul>
-                                        <li><a onclick="ChamaRegistrarPedido()">Registrar Pedido</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="icon-stack"></i> <span>Relatórios</span></a>
-                                    <ul>
-                                        <li><a href="#">Pedidos</a></li>
-                                        <li><a href="#">Clientes</a></li>
-                                        <li><a href="#">Produtos</a></li>
                                     </ul>
                                 </li>
                             </ul>

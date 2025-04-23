@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Text;
 using Youtan.Challenge.Front.Models.Request;
@@ -168,6 +169,51 @@ public class YoutanApiService(
             var content = await response.Content.ReadAsStringAsync();
 
             var responseApi = JsonConvert.DeserializeObject<Result<IEnumerable<ResponseAuction>>>(content);
+
+            if (responseApi.IsSuccess())
+            {
+                _logger.Information($"{nameof(LoginUserAsync)} - Encerrando chamada para cadastro de usuário.");
+
+                return responseApi;
+            }
+
+            var apiErrors = string.Join(" - ", responseApi?.Errors);
+
+            var failMessage = $"{nameof(LoginUserAsync)} - Ocorreu um erro ao chamar a API. StatusCode: {response.StatusCode} - {apiErrors}";
+
+            _logger.Error(failMessage);
+
+            return output.Failure(responseApi?.Errors.ToList());
+        }
+        catch (Exception ex)
+        {
+            var errorMessage = $"{nameof(LoginUserAsync)} - Ocorreu um erro ao chamar a API. Erro: {ex.Message}";
+
+            _logger.Error(errorMessage);
+
+            return output.Failure(new List<string>() { errorMessage });
+        }
+    }
+
+    public async Task<Result<MessageResult>> DeleteAuctionAsync(RequestDeleteAuction request)
+    {
+        _logger.Information($"{nameof(LoginUserAsync)} - Iniciando a chamada para cadastro de usuário.");
+
+        var output = new Result<MessageResult>();
+
+        try
+        {
+            var client = _httpClientFactory.CreateClient("YoutanApi");
+
+            var uri = string.Format("/api/v1/auction/{0}", request.AuctionId);
+
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", request.Token);
+
+            var response = await client.DeleteAsync(uri);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var responseApi = JsonConvert.DeserializeObject<Result<MessageResult>>(content);
 
             if (responseApi.IsSuccess())
             {

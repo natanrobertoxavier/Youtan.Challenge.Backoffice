@@ -25,7 +25,7 @@ function SuccessLoadAuctionList(json) {
         result.forEach(item => {
             let formattedDate = FormatDate(item.auctionDate);
             let name = item.auctionName;
-            let formattedName = name.length > 32 ? name.substring(0, 32) + "..." : name;
+            let formattedName = name.length > 28 ? name.substring(0, 28) + "..." : name;
 
             let newLine = bodyTable.insertRow();
             let auctionDate = newLine.insertCell(0);
@@ -33,8 +33,18 @@ function SuccessLoadAuctionList(json) {
             let celulaAcoes = newLine.insertCell(2);
 
             auctionDate.innerHTML = formattedDate;
-            auctionName.innerHTML = formattedName;
-            celulaAcoes.innerHTML = `<a id="btnEditAuction" onclick="EditAuction(${item.auctionId})"><i class="icon-pencil7 text-primary"></i></a> <a id="btnDeleteAuction" onclick="DeleteAuction(${item.AuctionId}, '${auctionName}')"><i class="icon-trash text-danger-600"></i></a>`;
+            auctionName.innerHTML = `<span style="white-space: nowrap;">${formattedName}</span>`;
+
+            celulaAcoes.innerHTML = `
+                <div style="text-align: right; white-space: nowrap; width: 100%;">
+                    <a id="btnEditAuction" onclick="EditAuction(${item.auctionId})">
+                        <i class="icon-pencil7 text-primary"></i>
+                    </a>
+                    <a id="btnDeleteAuction" onclick="DeleteAuction('${item.auctionId}', '${formattedName}')">
+                        <i class="icon-trash text-danger-600"></i>
+                    </a>
+                </div>
+            `;
 
             bodyTable.insertRow(newLine, bodyTable.firstChild);
         });
@@ -61,42 +71,41 @@ function EditAuction(id) {
     //AsyncRequest("POST", "../Produtos/GetProdutoPorId", request, SucessoCarregarProduto, ErroRequisicaoAjax);
 }
 
-function DeleteAuction(id, nomeProduto) {
-    //BloqueioTela();
+function DeleteAuction(id, auctionName) {
+    BlockScreen();
 
-    //swal({
-    //    title: `Deseja realmente excluir o produto: ${nomeProduto}?`,
-    //    text: "Todas as informações deste produto serão perdidas!",
-    //    type: "warning",
-    //    showCancelButton: true,
-    //    cancelButtonText: "Não excluir",
-    //    confirmButtonColor: "#FF7043",
-    //    confirmButtonText: "Sim, excluir!"
-    //},
-    //    function (result) {
-    //        if (result) {
+    swal({
+        title: `Deseja realmente excluir o leilão: ${auctionName}?`,
+        text: "Todas as informações serão perdidas!",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Não excluir",
+        confirmButtonColor: "#FF7043",
+        confirmButtonText: "Sim, excluir!"
+    },
+        function (result) {
+            if (result) {
 
-    //            let usuario = RetornaSessao();
-    //            let tokenUsuario = usuario.token;
+                let user = RetriverUserFromSession();
 
-    //            let RequestDeletarProduto = {
-    //                Token: tokenUsuario,
-    //                ProdutoId: id,
-    //            }
+                let requestDeleteAuction = {
+                    Token: user.data.token,
+                    AuctionId: id,
+                }
 
-    //            //AsyncRequest("POST", "../Produtos/Delete", RequestDeletarProduto, SucessoExcluirProduto, ErroRequisicaoAjax);
-    //            $.blockUI({ timeout: 10 });
-    //        } else {
-    //            $.blockUI({ timeout: 10 });
-    //        };
-    //    }
-    //)
+                AsyncRequest("POST", "../Auction/DeleteServiceApi", requestDeleteAuction, SucessoExcluirProduto, ErrorAsyncRequest);
+                $.blockUI({ timeout: 10 });
+            } else {
+                $.blockUI({ timeout: 10 });
+            };
+        }
+    )
 }
 
 function SucessoExcluirProduto(json) {
-    let retorno = json.retorno;
+    let result = json.result;
 
-    if (retorno.mensagens === null) {
+    if (result.success == true) {
         LoadAuctionList();
 
         return;
@@ -124,8 +133,6 @@ function SucessoCarregarProduto(json) {
     sessionStorage.setItem("PRODUTO", JSON.stringify(retorno))
 
     window.location.assign("../Produtos/Editar");
-
-    //sessionStorage.removeItem("PRODUTO");
 
     LoadAuctionList();
 }

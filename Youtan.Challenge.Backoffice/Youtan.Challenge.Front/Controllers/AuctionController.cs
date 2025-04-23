@@ -41,4 +41,17 @@ public class AuctionController : YoutanController
             result
         });
     }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteServiceApi(
+        [FromServices] IYoutanServiceApi serviceApi,
+        [FromBody] RequestDeleteAuction request)
+    {
+        var result = await serviceApi.DeleteAuctionAsync(request);
+
+        return Json(new
+        {
+            result
+        });
+    }
 }
