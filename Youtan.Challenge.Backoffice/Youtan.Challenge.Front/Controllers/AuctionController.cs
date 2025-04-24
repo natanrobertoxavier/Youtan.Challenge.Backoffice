@@ -16,6 +16,11 @@ public class AuctionController : YoutanController
         return View();
     }
 
+    public IActionResult Edit()
+    {
+        return View();
+    }
+
     [HttpPost]
     public async Task<IActionResult> RegisterAuctionServiceApi(
         [FromServices] IYoutanServiceApi serviceApi,
@@ -48,6 +53,19 @@ public class AuctionController : YoutanController
         [FromBody] RequestDeleteAuction request)
     {
         var result = await serviceApi.DeleteAuctionAsync(request);
+
+        return Json(new
+        {
+            result
+        });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> GetAuctionById(
+        [FromServices] IYoutanServiceApi serviceApi,
+        [FromBody] RequestGetAuctionById request)
+    {
+        var result = await serviceApi.RecoverByAuctionIdAsync(request);
 
         return Json(new
         {

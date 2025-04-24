@@ -37,7 +37,7 @@ function SuccessLoadAuctionList(json) {
 
             celulaAcoes.innerHTML = `
                 <div style="text-align: right; white-space: nowrap; width: 100%;">
-                    <a id="btnEditAuction" onclick="EditAuction(${item.auctionId})">
+                    <a id="btnEditAuction" onclick="EditAuction('${item.auctionId}')">
                         <i class="icon-pencil7 text-primary"></i>
                     </a>
                     <a id="btnDeleteAuction" onclick="DeleteAuction('${item.auctionId}', '${formattedName}')">
@@ -65,10 +65,10 @@ function EditAuction(id) {
 
     let request = {
         Token: user.data.token,
-        ProdutoId: id,
+        AuctionId: id,
     }
 
-    //AsyncRequest("POST", "../Produtos/GetProdutoPorId", request, SucessoCarregarProduto, ErroRequisicaoAjax);
+    AsyncRequest("POST", "../Auction/GetAuctionById", request, SuccessRecoverById, ErrorAsyncRequest);
 }
 
 function DeleteAuction(id, auctionName) {
@@ -126,15 +126,13 @@ function SucessoExcluirProduto(json) {
         });
 }
 
-function SucessoCarregarProduto(json) {
-    let retorno = json.retorno;
+function SuccessRecoverById(json) {
+    let result = json.result;
 
-    sessionStorage.removeItem("PRODUTO");
-    sessionStorage.setItem("PRODUTO", JSON.stringify(retorno))
+    sessionStorage.removeItem("AUCTION");
+    sessionStorage.setItem("AUCTION", JSON.stringify(result))
 
-    window.location.assign("../Produtos/Editar");
-
-    LoadAuctionList();
+    window.location.assign("../Auction/Edit");
 }
 
 function FiltrarTabela() {

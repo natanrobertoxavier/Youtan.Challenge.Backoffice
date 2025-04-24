@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Net;
 using System.Text;
 using Youtan.Challenge.Front.Models.Request;
 using Youtan.Challenge.Front.Models.Response;
@@ -197,7 +195,7 @@ public class YoutanApiService(
 
     public async Task<Result<MessageResult>> DeleteAuctionAsync(RequestDeleteAuction request)
     {
-        _logger.Information($"{nameof(LoginUserAsync)} - Iniciando a chamada para cadastro de usuário.");
+        _logger.Information($"{nameof(DeleteAuctionAsync)} - Iniciando a chamada para deletar usuário.");
 
         var output = new Result<MessageResult>();
 
@@ -217,14 +215,14 @@ public class YoutanApiService(
 
             if (responseApi.IsSuccess())
             {
-                _logger.Information($"{nameof(LoginUserAsync)} - Encerrando chamada para cadastro de usuário.");
+                _logger.Information($"{nameof(DeleteAuctionAsync)} - Encerrando chamada para deletar usuário.");
 
                 return responseApi;
             }
 
             var apiErrors = string.Join(" - ", responseApi?.Errors);
 
-            var failMessage = $"{nameof(LoginUserAsync)} - Ocorreu um erro ao chamar a API. StatusCode: {response.StatusCode} - {apiErrors}";
+            var failMessage = $"{nameof(DeleteAuctionAsync)} - Ocorreu um erro ao chamar a API. StatusCode: {response.StatusCode} - {apiErrors}";
 
             _logger.Error(failMessage);
 
@@ -232,7 +230,52 @@ public class YoutanApiService(
         }
         catch (Exception ex)
         {
-            var errorMessage = $"{nameof(LoginUserAsync)} - Ocorreu um erro ao chamar a API. Erro: {ex.Message}";
+            var errorMessage = $"{nameof(DeleteAuctionAsync)} - Ocorreu um erro ao chamar a API. Erro: {ex.Message}";
+
+            _logger.Error(errorMessage);
+
+            return output.Failure(new List<string>() { errorMessage });
+        }
+    }
+
+    public async Task<Result<ResponseAuction>> RecoverByAuctionIdAsync(RequestGetAuctionById request)
+    {
+        _logger.Information($"{nameof(RecoverByAuctionIdAsync)} - Iniciando a chamada para recuperar leilão por Id.");
+
+        var output = new Result<ResponseAuction>();
+
+        try
+        {
+            var client = _httpClientFactory.CreateClient("YoutanApi");
+
+            var uri = string.Format("/api/v1/auction/{0}", request.AuctionId);
+
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", request.Token);
+
+            var response = await client.GetAsync(uri);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var responseApi = JsonConvert.DeserializeObject<Result<ResponseAuction>>(content);
+
+            if (responseApi.IsSuccess())
+            {
+                _logger.Information($"{nameof(RecoverByAuctionIdAsync)} - Encerrando chamada para recuperar leilão por Id.");
+
+                return responseApi;
+            }
+
+            var apiErrors = string.Join(" - ", responseApi?.Errors);
+
+            var failMessage = $"{nameof(RecoverByAuctionIdAsync)} - Ocorreu um erro ao chamar a API. StatusCode: {response.StatusCode} - {apiErrors}";
+
+            _logger.Error(failMessage);
+
+            return output.Failure(responseApi?.Errors.ToList());
+        }
+        catch (Exception ex)
+        {
+            var errorMessage = $"{nameof(RecoverByAuctionIdAsync)} - Ocorreu um erro ao chamar a API. Erro: {ex.Message}";
 
             _logger.Error(errorMessage);
 
