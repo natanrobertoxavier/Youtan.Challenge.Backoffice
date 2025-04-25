@@ -60,15 +60,16 @@ function FormatDate(parseDate) {
 }
 
 function EditAuction(id) {
-    CheckSession();
-    let user = RetriverUserFromSession();
-
-    let request = {
-        Token: user.data.token,
-        AuctionId: id,
-    }
-
-    AsyncRequest("POST", "../Auction/GetAuctionById", request, SuccessRecoverById, ErrorAsyncRequest);
+    swal({
+        title: "Oops...",
+        text: `A tela de edição de leilões não está implementada!`,
+        confirmButtonColor: "#EF5350",
+        type: "error"
+    }, function (isConfirmed) {
+        if (isConfirmed) {
+            $.blockUI({ timeout: 10 });
+        }
+    });
 }
 
 function DeleteAuction(id, auctionName) {
@@ -93,7 +94,7 @@ function DeleteAuction(id, auctionName) {
                     AuctionId: id,
                 }
 
-                AsyncRequest("POST", "../Auction/DeleteServiceApi", requestDeleteAuction, SucessoExcluirProduto, ErrorAsyncRequest);
+                AsyncRequest("POST", "../Auction/DeleteServiceApi", requestDeleteAuction, SuccessDeleteAuction, ErrorAsyncRequest);
                 $.blockUI({ timeout: 10 });
             } else {
                 $.blockUI({ timeout: 10 });
@@ -102,7 +103,7 @@ function DeleteAuction(id, auctionName) {
     )
 }
 
-function SucessoExcluirProduto(json) {
+function SuccessDeleteAuction(json) {
     let result = json.result;
 
     if (result.success == true) {
@@ -133,43 +134,4 @@ function SuccessRecoverById(json) {
     sessionStorage.setItem("AUCTION", JSON.stringify(result))
 
     window.location.assign("../Auction/Edit");
-}
-
-function FiltrarTabela() {
-    let inputText = $('#txtPesquisarListagemProdutos').val().toLowerCase();
-    let selectedOption = parseInt($('#txtTipoDePesquisaListagemProdutos').val());
-    let columnIndex = 1;
-
-    switch (selectedOption) {
-        case 0:
-            columnIndex = 1;
-            break;
-        case 1:
-            columnIndex = 2;
-            break;
-        case 2:
-            columnIndex = 0;
-            break;
-        default:
-            columnIndex = 1;
-            break;
-    }
-
-
-    $('#tableProdutosListagem tbody tr').filter(function () {
-
-        let cellText = $(this).find('td').eq(columnIndex).text().toLowerCase();
-
-        if (cellText.indexOf(inputText) > -1) {
-            $(this).show();
-        } else {
-            $(this).hide();
-        }
-    });
-}
-
-function colunaIndex(nomeColuna) {
-    return $('#tableProdutosListagem thead th').filter(function () {
-        return $(this).text().toLowerCase() === nomeColuna;
-    }).index();
 }
